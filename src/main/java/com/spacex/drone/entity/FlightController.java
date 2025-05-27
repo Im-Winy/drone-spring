@@ -1,5 +1,7 @@
 package com.spacex.drone.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -17,16 +19,15 @@ public class FlightController {
     @Column(name="ALTITUDE_CIBLE")
     private double altitudeCible;
 
-    @OneToOne
-    @JoinColumn(name = "ID_POSITION_CIBLE")
-    private GPSModule positionCible;
+    @OneToMany(mappedBy = "flightController")
+    private List<GPSModule> positionCible;
 
 	public FlightController() {
 		super();
 	}
 
 	public FlightController(Long idFlightController, double vitesseActuelle, double altitudeCible,
-			GPSModule positionCible) {
+			List<GPSModule> positionCible) {
 		super();
 		this.idFlightController = idFlightController;
 		this.vitesseActuelle = vitesseActuelle;
@@ -58,11 +59,11 @@ public class FlightController {
 		this.altitudeCible = altitudeCible;
 	}
 
-	public GPSModule getPositionCible() {
+	public List<GPSModule> getPositionCible() {
 		return positionCible;
 	}
 
-	public void setPositionCible(GPSModule positionCible) {
+	public void setPositionCible(List<GPSModule> positionCible) {
 		this.positionCible = positionCible;
 	}
 

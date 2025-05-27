@@ -1,10 +1,14 @@
 package com.spacex.drone.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,16 +28,24 @@ public class GPSModule {
 
 	@Column(name="ALTITUDE")
     private double altitude;
+	
+	@ManyToOne
+	@JsonBackReference
+	@JoinColumn(name = "ID_CONTROLEUR_VOL")
+	private FlightController flightController;
+	
 	public GPSModule() {
 		super();
 	}
 
-	public GPSModule(Long idGPSModule, double latitude, double longitude, double altitude) {
+	public GPSModule(Long idGPSModule, double latitude, double longitude, double altitude,
+			FlightController flightController) {
 		super();
 		this.idGPSModule = idGPSModule;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.altitude = altitude;
+		this.flightController = flightController;
 	}
 
 	public Long getIdGPSModule() {
@@ -66,6 +78,14 @@ public class GPSModule {
 
 	public void setAltitude(double altitude) {
 		this.altitude = altitude;
+	}
+
+	public FlightController getFlightController() {
+		return flightController;
+	}
+
+	public void setFlightController(FlightController flightController) {
+		this.flightController = flightController;
 	}
 	
 }
